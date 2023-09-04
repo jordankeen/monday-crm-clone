@@ -1,7 +1,12 @@
+
+/* --- Colors --- */
+$main: #111;
+
 html, body {
    margin: 0;
    padding: 0;
    font-family: 'Trebuchet MS', sans-serif;
+   color: $main;
 }
 
 .app {
@@ -60,6 +65,8 @@ nav {
       display: flex;
       width: 100%;
       gap: 5px;
+      text-decoration: none;
+      color: $main;
       // * {
       //    background-color: rgb(221,221,221);
       //    margin: 2px;
@@ -88,5 +95,19 @@ nav {
    &__image {
       width: 100%;
       display: block;
+   }
+}
+
+.status-display {
+   display: flex;
+   justify-content: center;
+}
+
+.priority-display {
+
+   &__stars {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
    }
 }
