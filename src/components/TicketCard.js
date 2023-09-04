@@ -8,7 +8,7 @@ import DeleteBlock from './DeleteBlock'
 const TicketCard = ({ color, ticket }) => {
    return (
       <div className="ticket-card">
-         <div className='ticket-color'></div>
+         <div className='ticket-color' style={{backgroundColor: color}}></div>
          <Link to={`/ticket/${ticket.documentId}`} id="link">
             <h3>{ticket.title}</h3>
             <AvatarDisplay ticket={ticket}/>

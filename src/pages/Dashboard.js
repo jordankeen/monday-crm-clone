@@ -41,6 +41,15 @@ const Dashboard = () => {
       }
    ]
 
+   // Array of colors for Categories
+   const colors = [
+      'rgb(255,179,186)',
+      'rgb(255,223,186)',
+      'rgb(255,255,186)',
+      'rgb(186,255,201)',
+      'rgb(186,255,255)'
+   ]
+
    // Find unique categories, to group tickets witht he same category
    const uniqueCategories = [
       ...new Set(tickets?.map(({ category }) => category))
@@ -56,9 +65,9 @@ const Dashboard = () => {
                   {tickets.filter(ticket => ticket.category === uniqueCategory)
                      .map((filteredTicket, ticketIndex) => (
                         <TicketCard
-                           // id={ticketIndex}
+                           id={ticketIndex}
                            key={ticketIndex}
-                           color={filteredTicket.color}
+                           color={colors[categoryIndex] || colors[0]}
                            ticket={filteredTicket}
                         />
                      ))
