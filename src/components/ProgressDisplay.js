@@ -1,6 +1,10 @@
-const ProgressDisplay = () => {
+const ProgressDisplay = ({ progress }) => {
    return (
-      <div>ProgressDisplay</div>
+      <div className="progress-display">
+         <div className="progress-display__bar">
+            <div style={{ width: progress + '%'}} className="progress-display__indicator"></div>
+         </div>
+      </div>
    )
 }
 
