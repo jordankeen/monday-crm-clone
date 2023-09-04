@@ -1,0 +1,29 @@
+
+/* --- Colors --- */
+$main: #111;
+
+@import 'nav';
+@import 'ticket-card';
+@import 'ticket-page';
+
+html, body {
+   margin: 0;
+   padding: 0;
+   font-family: 'Trebuchet MS', sans-serif;
+   color: $main;
+}
+
+.app {
+   display: flex;
+}
+
+
+.dashboard {
+   padding: 30px;
+   width: 100%;
+
+   .ticket-container {
+      height: 80vh;
+      overflow: scroll;
+   }
+}
