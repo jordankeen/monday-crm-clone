@@ -1,4 +1,6 @@
 import { useState } from "react"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 const TicketPage = () => {
    const [formData, setFormData] = useState({
@@ -9,8 +11,20 @@ const TicketPage = () => {
 
    const editMode = false
 
-   const handleSubmit = () => {
-      console.log('submit')
+   const navigate = useNavigate()
+
+   const handleSubmit = async (e) => {
+      e.preventDefault()
+
+      if (!editMode) {
+         const response = await axios.post('http://localhost:8000/tickets', {
+            formData
+         })
+         const success = response.status === 200
+         if (success) {
+            navigate('/')
+         }
+      }
    }
 
    const handleChange = (e) => {
@@ -46,19 +60,19 @@ const TicketPage = () => {
                   </select>
 
                   <label htmlFor="new-category">New Category</label>
-                  <input id="new-category" name="category" type="text" onChange={handleChange} required={true} value={formData.category}/>
+                  <input id="new-category" name="category" type="text" onChange={handleChange} value={formData.category}/>
 
                   <label htmlFor="">Priority</label>
                   <div className="multiple-input-container">
-                     <input id="priority-1" name="priority" type="radio" onChange={handleChange} value={1} checked={formData.priority ===1}/>
+                     <input id="priority-1" name="priority" type="radio" onChange={handleChange} value={1} checked={formData.priority ==1}/>
                      <label htmlFor="priority-1">1</label>
-                     <input id="priority-2" name="priority" type="radio" onChange={handleChange} value={2} checked={formData.priority ===2}/>
+                     <input id="priority-2" name="priority" type="radio" onChange={handleChange} value={2} checked={formData.priority ==2}/>
                      <label htmlFor="priority-2">2</label>
-                     <input id="priority-3" name="priority" type="radio" onChange={handleChange} value={3} checked={formData.priority ===3}/>
+                     <input id="priority-3" name="priority" type="radio" onChange={handleChange} value={3} checked={formData.priority ==3}/>
                      <label htmlFor="priority-3">3</label>
-                     <input id="priority-4" name="priority" type="radio" onChange={handleChange} value={4} checked={formData.priority ===4}/>
+                     <input id="priority-4" name="priority" type="radio" onChange={handleChange} value={4} checked={formData.priority ==4}/>
                      <label htmlFor="priority-4">4</label>
-                     <input id="priority-5" name="priority" type="radio" onChange={handleChange} value={5} checked={formData.priority ===5}/>
+                     <input id="priority-5" name="priority" type="radio" onChange={handleChange} value={5} checked={formData.priority ==5}/>
                      <label htmlFor="priority-5">5</label>
                   </div>
 
@@ -86,7 +100,7 @@ const TicketPage = () => {
 
                   <label htmlFor="avatar">Avatar</label>
                   <input id="avatar" name="avatar" type="url" onChange={handleChange} required={true} value={formData.avatar}/>
-                  <div className="avatar-preview">
+                  <div className="ticket__avatar">
                      {formData.avatar && (
                         <img src={formData.avatar} alt="avatar preview" />
                      )}
