@@ -10,7 +10,6 @@ const Dashboard = () => {
 
    // get tickets from DB, format new array of objects with ID added
    useEffect(() => {
-      console.log('useEffect 1')
       const loadTickets = async () => {
          const response = await axios.get('http://localhost:8000/tickets')
          const dataObject = response.data.data
@@ -24,7 +23,6 @@ const Dashboard = () => {
             formattedArray.push(formattedData)
          })
          setTickets(formattedArray);
-         console.log('load tickets done')
       }
 
       loadTickets()
@@ -32,7 +30,6 @@ const Dashboard = () => {
 
    // set unique categories state
    useEffect(() => {
-      console.log('useEffect 2')
       const categoriesArray = [
          ...new Set(tickets?.map(({ category }) => category))
       ]
@@ -54,6 +51,7 @@ const Dashboard = () => {
       ...new Set(tickets?.map(({ category }) => category))
    ]
 
+   console.log(categories);
 
    return (
       <div className="dashboard">

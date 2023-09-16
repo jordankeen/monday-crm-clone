@@ -10,13 +10,13 @@ const TicketPage = ({ editMode }) => {
       timestamp: new Date().toISOString()
    })
 
-   const { categories, setCategories } = useContext(CategoriesContext)
+   const { categories } = useContext(CategoriesContext)
 
    const navigate = useNavigate()
 
    const handleSubmit = async (e) => {
       e.preventDefault()
-
+      console.log(formData)
       if (!editMode) {
          const response = await axios.post('http://localhost:8000/tickets', {
             formData
@@ -43,7 +43,7 @@ const TicketPage = ({ editMode }) => {
    }
 
 
-   console.log(formData)
+   console.log(categories)
 
    return (
       <div className="ticket">
@@ -58,7 +58,7 @@ const TicketPage = ({ editMode }) => {
                   <input id="description" name="description" type="text" onChange={handleChange} required={true} value={formData.description}/>
 
                   <label htmlFor="">Category</label>
-                  <select name="category" value={formData.category || categories[0]} onChange={handleChange}>
+                  <select name="category" value={formData.category} onChange={handleChange}>
                      {categories?.map((category, index) => (
                         <option key={index} value={category}>{category}</option>
                      ))}

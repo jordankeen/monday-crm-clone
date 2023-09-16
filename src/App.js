@@ -9,6 +9,7 @@ import { useState } from "react"
 const App = () => {
    const [categories, setCategories] = useState(null)
    const providerValues = { categories, setCategories }
+   
   return (
     <div className="app">
       <CategoriesContext.Provider value={ providerValues }>
