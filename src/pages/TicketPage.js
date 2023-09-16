@@ -1,15 +1,16 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import CategoriesContext from '../context'
 
-const TicketPage = () => {
+const TicketPage = ({ editMode }) => {
    const [formData, setFormData] = useState({
       status: 'not started',
       progress: 0,
       timestamp: new Date().toISOString()
    })
 
-   const editMode = false
+   const { categories, setCategories } = useContext(CategoriesContext)
 
    const navigate = useNavigate()
 
@@ -28,15 +29,19 @@ const TicketPage = () => {
    }
 
    const handleChange = (e) => {
-      const value = e.target.value
+      let value = e.target.value
       const name = e.target.name
+
+      if (name === 'priority') {
+         value = parseInt(value)
+      }
+      
       setFormData((prevState) => ({
          ...prevState,
          [name]: value
       }))
    }
 
-   const categories = ['test1', 'test2']
 
    console.log(formData)
 
@@ -53,7 +58,7 @@ const TicketPage = () => {
                   <input id="description" name="description" type="text" onChange={handleChange} required={true} value={formData.description}/>
 
                   <label htmlFor="">Category</label>
-                  <select name="category" value={formData.category} onChange={handleChange}>
+                  <select name="category" value={formData.category || categories[0]} onChange={handleChange}>
                      {categories?.map((category, index) => (
                         <option key={index} value={category}>{category}</option>
                      ))}
@@ -64,15 +69,15 @@ const TicketPage = () => {
 
                   <label htmlFor="">Priority</label>
                   <div className="multiple-input-container">
-                     <input id="priority-1" name="priority" type="radio" onChange={handleChange} value={1} checked={formData.priority ==1}/>
+                     <input id="priority-1" name="priority" type="radio" onChange={handleChange} value={1} checked={formData.priority ===1}/>
                      <label htmlFor="priority-1">1</label>
-                     <input id="priority-2" name="priority" type="radio" onChange={handleChange} value={2} checked={formData.priority ==2}/>
+                     <input id="priority-2" name="priority" type="radio" onChange={handleChange} value={2} checked={formData.priority ===2}/>
                      <label htmlFor="priority-2">2</label>
-                     <input id="priority-3" name="priority" type="radio" onChange={handleChange} value={3} checked={formData.priority ==3}/>
+                     <input id="priority-3" name="priority" type="radio" onChange={handleChange} value={3} checked={formData.priority ===3}/>
                      <label htmlFor="priority-3">3</label>
-                     <input id="priority-4" name="priority" type="radio" onChange={handleChange} value={4} checked={formData.priority ==4}/>
+                     <input id="priority-4" name="priority" type="radio" onChange={handleChange} value={4} checked={formData.priority ===4}/>
                      <label htmlFor="priority-4">4</label>
-                     <input id="priority-5" name="priority" type="radio" onChange={handleChange} value={5} checked={formData.priority ==5}/>
+                     <input id="priority-5" name="priority" type="radio" onChange={handleChange} value={5} checked={formData.priority ===5}/>
                      <label htmlFor="priority-5">5</label>
                   </div>
 

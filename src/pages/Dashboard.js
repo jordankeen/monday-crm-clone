@@ -1,20 +1,43 @@
 import TicketCard from '../components/TicketCard'
 import axios from 'axios'
 import { useState, useEffect, useContext } from 'react'
+import CategoriesContext from '../context'
 
 const Dashboard = () => {
+   // tickets state, categories state
    const [tickets, setTickets] = useState(null)
+   const { categories, setCategories } = useContext(CategoriesContext)
 
-   useEffect(async () => {
-      const response = await axios.get('http://localhost:8000/tickets')
-      const dataObject = response.data.data
+   // get tickets from DB, format new array of objects with ID added
+   useEffect(() => {
+      console.log('useEffect 1')
+      const loadTickets = async () => {
+         const response = await axios.get('http://localhost:8000/tickets')
+         const dataObject = response.data.data
+   
+         const arrayOfKeys = Object.keys(dataObject)
+         const arrayOfData = Object.keys(dataObject).map((key) => dataObject[key])
+         const formattedArray = []
+         arrayOfKeys.forEach((key, index) => {
+            const formattedData = { ...arrayOfData[index]}
+            formattedData['documentId'] = key
+            formattedArray.push(formattedData)
+         })
+         setTickets(formattedArray);
+         console.log('load tickets done')
+      }
 
-      const arrayOfKeys = Object.keys(dataObject)
-      const arrayOfData = Object.keys(dataObject).map((key) => dataObject[key])
-
-      console.log(arrayOfKeys)
-      console.log(arrayOfData);
+      loadTickets()
    }, [])
+
+   // set unique categories state
+   useEffect(() => {
+      console.log('useEffect 2')
+      const categoriesArray = [
+         ...new Set(tickets?.map(({ category }) => category))
+      ]
+      setCategories(categoriesArray)
+   }, [tickets])
 
 
    // Array of colors for Categories
@@ -30,6 +53,7 @@ const Dashboard = () => {
    const uniqueCategories = [
       ...new Set(tickets?.map(({ category }) => category))
    ]
+
 
    return (
       <div className="dashboard">
